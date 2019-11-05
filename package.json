@@ -1,6 +1,6 @@
 {
   "name": "@4rk/vue-mousetrap",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Mousetrap directive for Vue",
   "keywords": [
     "vue",
