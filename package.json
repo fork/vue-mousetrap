@@ -1,0 +1,34 @@
+{
+  "name": "@4rk/vue-mousetrap",
+  "version": "1.0.0",
+  "description": "Mousetrap directive for Vue",
+  "keywords": [
+    "vue",
+    "mousetrap",
+    "hotkeys",
+    "shortcuts",
+    "directive",
+    "keyboard"
+  ],
+  "license": "MIT",
+  "author": "Fork Unstable Media GmbH <obj@fork.de>",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fork/vue-mousetrap.git"
+  },
+  "scripts": {
+    "preversion": "kacl prerelease",
+    "version": "kacl release && prettier --write CHANGELOG.md && git add CHANGELOG.md"
+  },
+  "peerDependencies": {
+    "vue": "2.x"
+  },
+  "dependencies": {
+    "mousetrap": "^1.6.3"
+  },
+  "devDependencies": {
+    "@brightcove/kacl": "^0.1.8",
+    "prettier": "^1.18.2"
+  }
+}
