@@ -1,6 +1,4 @@
 import Mousetrap from "mousetrap";
-import Vue from "vue";
-
 /**
  * Bind mousetrap event to a vue component instance
  * @param {HTMLElement} el - HTMLElement of the vue component
@@ -9,10 +7,10 @@ import Vue from "vue";
  * @returns {void}
  */
 const bindMousetrap = (el, value, vnode) => {
-  Mousetrap.bind(value, ev => {
-    if (vnode.componentInstance) {
+  Mousetrap.bind(value, (ev) => {
+    if (vnode.component) {
       // When on a Vue component
-      vnode.componentInstance.$emit("mousetrap", ev);
+      vnode.component.emit("mousetrap", ev);
     } else {
       // When on a native HTMLElement
       const evx = new CustomEvent("mousetrap", ev);
@@ -20,25 +18,21 @@ const bindMousetrap = (el, value, vnode) => {
     }
   });
 };
-
 const MousetrapDirective = {
-  bind(el, { value }, vnode) {
+  beforeMount(el, { value }, vnode) {
     bindMousetrap(el, value, vnode);
   },
-  update(el, { value, oldValue }, vnode) {
+  updated(el, { value, oldValue }, vnode) {
     Mousetrap.unbind(oldValue);
     bindMousetrap(el, value, vnode);
   },
-  unbind(el, { value }) {
+  unmounted(el, { value }) {
     Mousetrap.unbind(value);
-  }
+  },
 };
-
-const VueMousetrap = {
-  install() {
-    Vue.directive("mousetrap", MousetrapDirective);
-  }
+export default {
+  install(app) {
+    app.directive("mousetrap", MousetrapDirective);
+  },
 };
-
-export default VueMousetrap;
 export { MousetrapDirective };
