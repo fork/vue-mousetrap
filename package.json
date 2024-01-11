@@ -22,7 +22,7 @@
     "version": "kacl release && prettier --write CHANGELOG.md && git add CHANGELOG.md"
   },
   "peerDependencies": {
-    "vue": "2.x"
+    "vue": "3.x"
   },
   "dependencies": {
     "mousetrap": "^1.6.3"
