@@ -6,8 +6,11 @@ import Mousetrap from "mousetrap";
  * @param {Vue.VNode} vnode - VNode of the vue component
  * @returns {void}
  */
-const bindMousetrap = (el, value, vnode) => {
-  Mousetrap.bind(value, (ev) => {
+const bindMousetrap = (el, value, vnode, preventDefault) => {
+  Mousetrap.bind(value, ev => {
+    if (preventDefault) {
+      ev.preventDefault();
+    }
     if (vnode.component) {
       // When on a Vue component
       vnode.component.emit("mousetrap", ev);
@@ -18,21 +21,22 @@ const bindMousetrap = (el, value, vnode) => {
     }
   });
 };
+
 const MousetrapDirective = {
-  beforeMount(el, { value }, vnode) {
-    bindMousetrap(el, value, vnode);
+  beforeMount(el, { value, modifiers }, vnode) {
+    bindMousetrap(el, value, vnode, modifiers.prevent === true);
   },
-  updated(el, { value, oldValue }, vnode) {
+  updated(el, { value, oldValue, modifiers }, vnode) {
     Mousetrap.unbind(oldValue);
-    bindMousetrap(el, value, vnode);
+    bindMousetrap(el, value, vnode, modifiers.prevent === true);
   },
   unmounted(el, { value }) {
     Mousetrap.unbind(value);
-  },
+  }
 };
 export default {
   install(app) {
     app.directive("mousetrap", MousetrapDirective);
-  },
+  }
 };
 export { MousetrapDirective };
